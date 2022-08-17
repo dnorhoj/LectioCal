@@ -92,6 +92,7 @@ def main():
     events = cal.date_search(start, end)
 
     # Remove leftover events
+    print("Checking if there are any untracked modules")
     for e in events:
         # Extract uid from ical
         uid = e.icalendar_instance.subcomponents[0].get("uid")
