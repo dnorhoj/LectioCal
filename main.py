@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 log = logging.getLogger("LectioCalDAV")
 
-def generate_ical(start, end, summary, desc, uid):
+def generate_ical(start, end, summary, desc, color, uid):
     # Create calendar instance
     event = icalendar.Calendar()
     event.add('prodid', '-//dnorhoj//lectio.py//da_DK')
@@ -25,6 +25,7 @@ def generate_ical(start, end, summary, desc, uid):
     event_data.add('dtend', end)
     event_data.add('summary', summary)
     event_data.add('description', desc)
+    event_data.add('color', color)
 
     event.add_component(event_data)
     
@@ -82,15 +83,23 @@ def main(*, use_tqdm=False):
         desc = re.match(r"(.*?)&", module.url)[1]
         if module.extra_info:
             desc += "\n\n" + module.extra_info
+        
+        # Color info (changed, deleted)
+        color = None
+        if module.status == 1: # Module changed
+            color = "green"
+        elif module.status == 2: # Module deleted
+            color = "red"
 
         # Save the event
         cal.save_event(
             ical=generate_ical(
-                module.start_time,
-                module.end_time,
-                title,
-                desc,
-                uids[-1]
+                start=module.start_time,
+                end=module.end_time,
+                summary=title,
+                desc=desc,
+                color=color,
+                uid=uids[-1]
             ),
         )
 
