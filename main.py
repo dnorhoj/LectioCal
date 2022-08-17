@@ -33,7 +33,7 @@ def generate_ical(start, end, summary, desc, uid):
 
 def main():
     # Create lectio obj
-    lec = lectio.Lectio(681)
+    lec = lectio.Lectio(environ.get("LECTIO_INST_ID"))
 
     # Creds from env vars
     lec.authenticate(

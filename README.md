@@ -17,6 +17,7 @@ I recommend using `pipenv install`, but you can also install dependencies with p
 To use the script you need a few environment variables.
 
 ```
+LECTIO_INST_ID=123
 LECTIO_USERNAME="exam123p"
 LECTIO_PASSWORD="eX4mp13"
 
