@@ -9,6 +9,7 @@ icalendar = "*"
 "lectio.py" = "*"
 tqdm = "*"
 beautifulsoup4 = "*"
+apscheduler = "*"
 
 [dev-packages]
 

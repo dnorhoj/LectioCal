@@ -12,6 +12,12 @@ I recommend using `pipenv install`, but you can also install dependencies with p
 
     pip install -r requirements.txt
 
+## Running
+
+You can run the script either a single time, with `python main.py`, or you can run the script every hour with `python schedule.py`
+
+Moreover, you can build and run the repository as a docker image, or use heroku, or similar services.
+
 ## Environment variables
 
 To use the script you need a few environment variables.
