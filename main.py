@@ -31,7 +31,7 @@ def generate_ical(start, end, summary, desc, uid):
 
     return event.to_ical()
 
-def main():
+def main(*, use_tqdm=False):
     # Create lectio obj
     lec = lectio.Lectio(environ.get("LECTIO_INST_ID"))
 
@@ -62,8 +62,14 @@ def main():
     # List of uids, used later for deleting non-existent modules
     uids = []
 
-    # Iterate over all modules with tqdm
-    for module in tqdm(sched, "Importing modules into CalDAV"):
+    # Iterate over all modules
+    sched_iter = sched
+    if use_tqdm:
+        sched_iter = tqdm(sched_iter, "Importing modules into CalDAV")
+    else:
+        print("Importing modules into CalDAV")
+    
+    for module in sched_iter:
         # Example: no title: 3.b Da; with title: 3.b Da - Never gonna give you up
         title = module.subject
         if module.title is not None:
@@ -110,4 +116,4 @@ def main():
 
 if __name__ == '__main__':
     print("Starting Lectio.py ft. CalDAV")
-    main()
+    main(use_tqdm=True)

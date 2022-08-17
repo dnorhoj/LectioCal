@@ -1,5 +1,5 @@
 from main import main as sync_cal
-from apscheduler.schedulers.background import BlockingScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 if __name__ == '__main__':
     scheduler = BlockingScheduler()
