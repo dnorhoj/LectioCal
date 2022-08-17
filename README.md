@@ -27,7 +27,7 @@ CALDAV_PASSWORD="example"
 
 ## License
 
-This project uses the `GNU General Public License v3.0` license.
+This project uses the `GNU Lesser General Public License v3.0` license.
 
 You can read more in [LICENSE](./LICENSE).
 
