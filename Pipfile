@@ -9,6 +9,7 @@ icalendar = "*"
 tqdm = "*"
 beautifulsoup4 = "*"
 apscheduler = "*"
+requests = "*"
 
 [dev-packages]
 
