@@ -1,1 +1,1 @@
-worker: python schedule.py
+worker: python src/schedule.py
