@@ -78,7 +78,7 @@ def main(*, use_tqdm=False):
             title += f' - {module.title}'
         
         # Get uid from module title get params, and append it to uids list
-        uids.append(re.search(r"absid=(.*?)&", module.url)[1])
+        uids.append("lecmod"+re.search(r"absid=(.*?)&", module.url)[1])
         
         # Add module url to event description, and optionally add extra info if present
         desc = re.match(r"(.*?)&", module.url)[1]
@@ -120,8 +120,7 @@ def main(*, use_tqdm=False):
             start = component.get("dtstart")
             end = component.get("dtend")
             summary = component.get("summary")
-
-            log.warning(f"Deleting module {uid}, start time: {start}, end time: {end}, summary: {summary}")
+            log.warning(f"Deleting module {uid}, start time: {start.dt.isoformat()}, end time: {end.dt.isoformat()}, summary: {summary}")
             e.delete()
 
 if __name__ == '__main__':
