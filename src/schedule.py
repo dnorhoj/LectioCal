@@ -6,5 +6,5 @@ if __name__ == '__main__':
     print("Running once before starting schedule.")
     sync_cal()
     print("\nStarting scheduler...")
-    scheduler.add_job(sync_cal, 'interval', hours=1)
+    scheduler.add_job(sync_cal, 'cron', hour="*")
     scheduler.start()
