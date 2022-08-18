@@ -10,6 +10,7 @@ tqdm = "*"
 beautifulsoup4 = "*"
 apscheduler = "*"
 requests = "*"
+lxml = "*"
 
 [dev-packages]
 
