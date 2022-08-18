@@ -4,34 +4,10 @@ from os import environ as environ
 import logging
 
 import caldav
-import icalendar
 import lectio
 from tqdm import tqdm
 
 log = logging.getLogger("LectioCalDAV")
-
-def generate_ical(start, end, summary, desc, uid, color=None):
-    # Create calendar instance
-    event = icalendar.Calendar()
-    event.add('prodid', '-//dnorhoj//lectio.py//da_DK')
-    event.add('version', '2.0')
-
-    event_data = icalendar.Event()
-
-    # Add event_data fields
-    event_data.add('dtstamp', datetime.now())
-    event_data.add('uid', uid)
-    event_data.add('dtstart', start)
-    event_data.add('dtend', end)
-    event_data.add('summary', summary)
-    event_data.add('description', desc)
-    if color is not None:
-        event_data.add('color', color)
-
-    event.add_component(event_data)
-    
-
-    return event.to_ical()
 
 def main(*, use_tqdm=False):
     # Create lectio obj
@@ -44,11 +20,11 @@ def main(*, use_tqdm=False):
     )
 
     # Get calendar from CalDAV URL, username and password
-    cal = caldav.DAVClient(
-        url=environ.get('CALDAV_URL'),
-        username=environ.get('CALDAV_USERNAME'),
-        password=environ.get('CALDAV_PASSWORD')
-    ).calendar(url=environ.get('CALDAV_URL'))
+    cal = caldav.CalDavClient(
+        environ.get('CALDAV_USERNAME'),
+        environ.get('CALDAV_PASSWORD'),
+        environ.get('CALDAV_URL')
+    )
 
     # Get start and end dates, without hour, minute, seconds
     start = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
@@ -70,7 +46,7 @@ def main(*, use_tqdm=False):
         sched_iter = tqdm(sched_iter, "Importing modules into CalDAV")
     else:
         print("Importing modules into CalDAV")
-    
+
     for module in sched_iter:
         # Example: no title: 3.b Da; with title: 3.b Da - Never gonna give you up
         title = module.subject
@@ -93,35 +69,34 @@ def main(*, use_tqdm=False):
             color = "red"
 
         # Save the event
-        cal.save_event(
-            ical=generate_ical(
-                uid=uids[-1],
-                start=module.start_time,
-                end=module.end_time,
-                summary=title,
-                desc=desc,
-                color=color
-            ),
+        cal.add_event(
+            uid=uids[-1],
+            start=module.start_time,
+            end=module.end_time,
+            summary=title,
+            desc=desc,
+            color=color
         )
 
     # Get all cal events within start, end
-    events = cal.date_search(start, end)
+    events = cal.get_events(start, end)
 
     # Remove leftover events
     print("Checking if there are any untracked modules")
     for e in events:
         # Extract uid from ical
-        uid = e.icalendar_instance.subcomponents[0].get("uid")
+        uid = e.subcomponents[0].get("uid")
 
         if uid not in uids:
             # Get more info for logging
-            component = e.icalendar_instance.subcomponents[0]
+            component = e.subcomponents[0]
 
             start = component.get("dtstart")
             end = component.get("dtend")
             summary = component.get("summary")
             log.warning(f"Deleting module {uid}, start time: {start.dt.isoformat()}, end time: {end.dt.isoformat()}, summary: {summary}")
-            e.delete()
+
+            cal.delete_event(uid)
 
 if __name__ == '__main__':
     print("Starting Lectio.py ft. CalDAV")
