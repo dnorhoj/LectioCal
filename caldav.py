@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import List
 import icalendar
 from bs4 import BeautifulSoup

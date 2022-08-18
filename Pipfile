@@ -4,13 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-caldav = "*"
 icalendar = "*"
 "lectio.py" = "*"
 tqdm = "*"
 beautifulsoup4 = "*"
 apscheduler = "*"
-httpx = "*"
 
 [dev-packages]
 

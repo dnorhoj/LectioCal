@@ -3,9 +3,10 @@ from datetime import datetime, timedelta
 from os import environ as environ
 import logging
 
-import caldav
 import lectio
 from tqdm import tqdm
+
+import caldav
 
 log = logging.getLogger("LectioCalDAV")
 
