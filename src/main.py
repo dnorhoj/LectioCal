@@ -29,9 +29,9 @@ class LectioCalDavSynchronizer:
         self.lec = self._lec_auth()
         self.lec_user_id = self.lec.get_user_id()
         self.cal = caldav.CalDavClient(
-            environ.get('CALDAV_USERNAME'),
-            environ.get('CALDAV_PASSWORD'),
-            environ.get('CALDAV_URL')
+            self.cal_username,
+            self.cal_password,
+            self.cal_url
         )
 
         self.log = logging.getLogger("synchronizer")
