@@ -81,6 +81,8 @@ class LectioCalDavSynchronizer:
         title = module.subject
         if module.title is not None:
             title += f' - {module.title}'
+        if module.extra_info:
+            title += ' [+]'
 
         return title
 
