@@ -177,12 +177,15 @@ class LectioCalDavSynchronizer:
         """
         component = event.subcomponents[0]
 
-        return (component.get("uid") == self._get_module_id(module) and
-                component.get("summary") == self._get_module_title(module) and
-                component.get("description") == self._get_module_desc(module) and
-                component.get("dtstart").dt.replace(tzinfo=None) == module.start_time and
-                component.get("dtend").dt.replace(tzinfo=None) == module.end_time and
-                component.get("color") == self._get_module_color(module))
+        try:
+            return (component.get("uid") == self._get_module_id(module) and
+                    component.get("summary") == self._get_module_title(module) and
+                    component.get("description") == self._get_module_desc(module) and
+                    component.get("dtstart").dt.replace(tzinfo=None) == module.start_time and
+                    component.get("dtend").dt.replace(tzinfo=None) == module.end_time and
+                    component.get("color") == self._get_module_color(module))
+        except AttributeError:
+            return False
 
     def sync(self, start:datetime=None):
         """Starts synchronization 30 days forward
