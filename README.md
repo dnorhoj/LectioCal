@@ -1,6 +1,8 @@
 # LectioCal
 
 ![](https://img.shields.io/github/license/dnorhoj/LectioCal)
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/dnorhoj/LectioCal)
+![Codacy grade](https://img.shields.io/codacy/grade/76cecd863b67412fad55505149d99fce)
 
 This small script lets you synchronize your lectio.dk schedule with any standard CalDAV server.
 
