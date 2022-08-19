@@ -22,15 +22,15 @@ Moreover, you can build and run the repository as a docker image, or use heroku,
 
 To use the script you need a few environment variables.
 
-```
-LECTIO_INST_ID=123
-LECTIO_USERNAME="exam123p"
-LECTIO_PASSWORD="eX4mp13"
+    ```env
+    LECTIO_INST_ID=123
+    LECTIO_USERNAME="exam123p"
+    LECTIO_PASSWORD="eX4mp13"
 
-CALDAV_URL="https://example.com"
-CALDAV_USERNAME="example@example.com"
-CALDAV_PASSWORD="example"
-```
+    CALDAV_URL="https://example.com"
+    CALDAV_USERNAME="example@example.com"
+    CALDAV_PASSWORD="example"
+    ```
 
 ## License
 
