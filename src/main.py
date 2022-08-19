@@ -57,7 +57,7 @@ class LectioCalDavSynchronizer:
         )
 
         return lec
-    
+
     def _get_team_translations(self):
         try:
             TEAM_TRANSLATIONS_PATH = os.path.join(os.path.dirname(__file__), '..', 'team_translations.json')
