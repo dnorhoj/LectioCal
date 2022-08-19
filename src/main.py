@@ -101,7 +101,7 @@ class LectioCalDavSynchronizer:
         if module.extra_info:
             desc += "\n\n" + module.extra_info
 
-        return desc
+        return desc.replace("\r\n", "\n")
 
     @staticmethod
     def _get_module_color(module: lectio.Module) -> str:
