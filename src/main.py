@@ -36,7 +36,7 @@ class LectioCalDavSynchronizer:
 
         self.log = logging.getLogger("synchronizer")
         logging.basicConfig(level=logging.INFO, format='%(message)s')
-    
+
     def _lec_auth(self) -> lectio.Lectio:
         """Authenticate lectio module, and return it
 
@@ -53,7 +53,7 @@ class LectioCalDavSynchronizer:
         )
 
         return lec
-    
+
     @staticmethod
     def _get_module_id(module: lectio.Module) -> str:
         """Get lectio module id as caldav id
@@ -66,7 +66,7 @@ class LectioCalDavSynchronizer:
         """
 
         return "lecmod"+re.search(r"absid=(.*?)&", module.url)[1]
-    
+
     @staticmethod
     def _get_module_title(module: lectio.Module) -> str:
         """Get module title
@@ -81,9 +81,9 @@ class LectioCalDavSynchronizer:
         title = module.subject
         if module.title is not None:
             title += f' - {module.title}'
-        
+
         return title
-    
+
     @staticmethod
     def _get_module_desc(module: lectio.Module) -> str:
         """Get module description
@@ -100,9 +100,9 @@ class LectioCalDavSynchronizer:
             desc = module.room+"\n"+desc
         if module.extra_info:
             desc += "\n\n" + module.extra_info
-        
+
         return desc
-    
+
     @staticmethod
     def _get_module_color(module: lectio.Module) -> str:
         """Get module color as string
@@ -119,9 +119,9 @@ class LectioCalDavSynchronizer:
             color = "green"
         elif module.status == 2: # Module deleted
             color = "red"
-        
+
         return color
-    
+
     def add_or_update_module(self, module: lectio.Module) -> None:
         """Adds module to CalDav
 
@@ -157,7 +157,7 @@ class LectioCalDavSynchronizer:
                 component.get("dtstart").dt.replace(tzinfo=None) == module.start_time and
                 component.get("dtend").dt.replace(tzinfo=None) == module.end_time and
                 component.get("color") == self._get_module_color(module))
-    
+
     def sync(self, start:datetime=None):
         """Starts synchronization 30 days forward
 
@@ -215,12 +215,12 @@ class LectioCalDavSynchronizer:
                 # Therefore we delete it from caldav
                 removed += 1
                 self.cal.delete_event(uid)
-        
+
         # Add remaining modules (new modules)
         for module in sched:
             added += 1
             self.add_or_update_module(module)
-        
+
         self.log.info(f"Updated {updated} events\nAdded {added} events\nRemoved {removed} events")
 
 if __name__ == '__main__':

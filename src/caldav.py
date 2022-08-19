@@ -14,7 +14,7 @@ class CalDavClient():
 
         self.session = requests.Session()
         self.session.auth = (username, password)
-    
+
     def _request(self, method, url, **kwargs):
         r = self.session.request(method, url, **kwargs)
 
@@ -23,7 +23,7 @@ class CalDavClient():
             raise Exception(f"Problem encountered on url: \"{url}\", method: \"{method}\"")
 
         return r
-    
+
     @staticmethod
     def _generate_ical(start: datetime, end: datetime, summary: str, desc: str, uid: str, color:str=None) -> str:
         # Create calendar instance
@@ -44,15 +44,15 @@ class CalDavClient():
             event_data.add('color', color)
 
         event.add_component(event_data)
-    
+
         return event.to_ical()
 
     def add_event(self, start, end, summary, desc, uid, color=None):
         self._request("PUT", f"{self.cal_url}/{uid}.ics", data=self._generate_ical(start,end,summary,desc,uid,color))
-    
+
     def delete_event(self, uid:str) -> None:
         self._request("DELETE", f"{self.cal_url}/{uid}.ics")
-    
+
     def get_events(self, start: datetime, end: datetime) -> List[icalendar.Calendar]:
         start = start.strftime("%Y%m%dT%H%M%SZ")
         end = end.strftime("%Y%m%dT%H%M%SZ")
