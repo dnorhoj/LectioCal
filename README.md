@@ -8,6 +8,17 @@ This small script lets you synchronize your lectio.dk schedule with any standard
 
 This has been developed and tested with `Python 3.10`. But it *should* work with any newer python 3 version.
 
+## Table of Contents
+
+- [LectioCal](#lectiocal)
+  - [Table of Contents](#table-of-contents)
+  - [Requirements](#requirements)
+  - [Running](#running)
+  - [Environment variables](#environment-variables)
+  - [Team translations](#team-translations)
+  - [License](#license)
+  - [Contributing](#contributing)
+
 ## Requirements
 
 I recommend using `pipenv install`, but you can also install dependencies with pip;
@@ -32,6 +43,26 @@ LECTIO_PASSWORD="eX4mp13"
 CALDAV_URL="https://example.com"
 CALDAV_USERNAME="example@example.com"
 CALDAV_PASSWORD="example"
+```
+
+## Team translations
+
+Optionally, you can set up team translations.
+
+To do this, you can create a file called `team_translations.json` in the root,
+where you specify your team name translations.
+
+Here you can define case insensitive name as key, which will be searched for,
+the search is *case insensitive* and does not need a full match, to succeed.
+
+**Example configuration**
+
+```json
+{
+  "da": "Dansk",
+  "ma": "Math",
+  "en": "Engelsk"
+}
 ```
 
 ## License
