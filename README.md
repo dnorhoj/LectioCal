@@ -15,8 +15,7 @@ This has been developed and tested with `Python 3.10`. But it *should* work with
   - [Requirements](#requirements)
   - [Running](#running)
   - [Environment variables](#environment-variables)
-  - [Configuration](#configuration)
-    - [Configuration options](#configuration-options)
+  - [Team translations](#team-translations)
   - [License](#license)
   - [Contributing](#contributing)
 
@@ -46,46 +45,25 @@ CALDAV_USERNAME="example@example.com"
 CALDAV_PASSWORD="example"
 ```
 
-## Configuration
+## Team translations
 
-Configuration happens inside a `config.json` file in the root directory of the project.
+Optionally, you can set up team translations.
 
-*Note: you have to create this file yourself*
+To do this, you can create a file called `team_translations.json` in the root,
+where you specify your team name translations.
 
-### Configuration options
+Here you can define case insensitive name as key, which will be searched for,
+the search is *case insensitive* and does not need a full match, to succeed.
 
-<details>
-  <summary>Team translations</summary> 
+**Example configuration**
 
-  Config: `team_translations`
-
-  Lets you translate team names into a more readable form.
-
-  If no translation is found, it will default to the original team name.
-
-  **Format**
-
-  | Name | Type | Default | Description |
-  | - | - | - | - |
-  | `match_full_team` | `bool` | `false` | If the translation key should be exact, or just be a part of module team |
-  | `case_sensitive` | `bool` | `false` | Whether check should be case sensitive |
-  | `translations` | `dict` (See example) | `{}` | Actual translation mapping |
-
-  **Example configuration**
-  ```json
-  {
-      "team_translations": {
-          "match_full_team": false,
-          "case_sensitive": false,
-          "translations": {
-              "DA": "Dansk",
-              "MA": "Math",
-              "EN": "Engelsk"
-          }
-      }
-  }
-  ```
-</details>
+```json
+{
+  "da": "Dansk",
+  "ma": "Math",
+  "en": "Engelsk"
+}
+```
 
 ## License
 

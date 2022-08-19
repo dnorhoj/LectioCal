@@ -1,6 +1,8 @@
+import json
 import re
 from datetime import datetime, timedelta
 import logging
+import os.path
 
 import lectio
 import icalendar
@@ -34,6 +36,8 @@ class LectioCalDavSynchronizer:
             self.cal_url
         )
 
+        self.team_translations = self._get_team_translations()
+
         self.log = logging.getLogger("synchronizer")
         logging.basicConfig(level=logging.INFO, format='%(message)s')
 
@@ -53,6 +57,22 @@ class LectioCalDavSynchronizer:
         )
 
         return lec
+    
+    def _get_team_translations(self):
+        try:
+            TEAM_TRANSLATIONS_PATH = os.path.join(os.path.dirname(__file__), '..', 'team_translations.json')
+
+            with open(TEAM_TRANSLATIONS_PATH, 'r') as f:
+                return json.load(f)
+
+        except FileNotFoundError:
+            self.log.warn("No team translation config found.")
+        except json.JSONDecodeError:
+            self.log.error(f"Invalid json in {TEAM_TRANSLATIONS_PATH}")
+        except:
+            self.log.error("Unknown error occured while trying to read team translations")
+
+        return {}
 
     @staticmethod
     def _get_module_id(module: lectio.Module) -> str:
@@ -67,8 +87,7 @@ class LectioCalDavSynchronizer:
 
         return "lecmod"+re.search(r"absid=(.*?)&", module.url)[1]
 
-    @staticmethod
-    def _get_module_title(module: lectio.Module) -> str:
+    def _get_module_title(self, module: lectio.Module) -> str:
         """Get module title
 
         Args:
@@ -79,6 +98,11 @@ class LectioCalDavSynchronizer:
         """
 
         title = module.subject
+
+        for trans in self.team_translations.keys():
+            if trans.lower() in module.subject.lower():
+                title = self.team_translations.get(trans)
+
         if module.title is not None:
             title += f' - {module.title}'
         if module.extra_info:

@@ -1,4 +1,4 @@
 # Secrets
 .env
 __pycache__/
-/config.json
+/team_translations.json
