@@ -11,12 +11,12 @@ class LectioCalDavSynchronizer:
         """Constructor for LectioCalDavSynchronizer
 
         Args:
-            lec_inst_id (_type_): Lectio institution id
-            lec_username (_type_): Lectio username
-            lec_password (_type_): Lectio password
-            cal_url (_type_): CalDav calendar URL
-            cal_username (_type_): CalDav username
-            cal_password (_type_): CalDav password
+            lec_inst_id (int|str): Lectio institution id
+            lec_username (str): Lectio username
+            lec_password (str): Lectio password
+            cal_url (str): CalDav calendar URL
+            cal_username (str): CalDav username
+            cal_password (str): CalDav password
         """
 
         self.lec_inst_id = lec_inst_id
