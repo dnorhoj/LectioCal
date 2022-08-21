@@ -1,6 +1,6 @@
 # LectioCal
 
-![](https://img.shields.io/github/license/dnorhoj/LectioCal)
+![License](https://img.shields.io/github/license/dnorhoj/LectioCal)
 ![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/dnorhoj/LectioCal)
 ![Codacy grade](https://img.shields.io/codacy/grade/76cecd863b67412fad55505149d99fce)
 
@@ -16,6 +16,7 @@ This has been developed and tested with `Python 3.10`. But it *should* work with
   - [Running](#running)
   - [Environment variables](#environment-variables)
   - [Team translations](#team-translations)
+    - [Example configuration](#example-configuration)
   - [License](#license)
   - [Contributing](#contributing)
 
@@ -23,7 +24,9 @@ This has been developed and tested with `Python 3.10`. But it *should* work with
 
 I recommend using `pipenv install`, but you can also install dependencies with pip;
 
-    pip install -r requirements.txt
+```sh
+pip install -r requirements.txt
+```
 
 ## Running
 
@@ -55,7 +58,7 @@ where you specify your team name translations.
 Here you can define case insensitive name as key, which will be searched for,
 the search is *case insensitive* and does not need a full match, to succeed.
 
-**Example configuration**
+### Example configuration
 
 ```json
 {

@@ -221,7 +221,7 @@ class LectioCalDavSynchronizer:
         added = 0
         removed = 0
         updated = 0
-        
+
         self.log.info("Updating/removing existing events...")
         # Remove or update modules
         for event in events:
