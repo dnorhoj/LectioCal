@@ -220,7 +220,8 @@ class LectioCalDavSynchronizer:
         added = 0
         removed = 0
         updated = 0
-
+        
+        self.log.info("Updating/removing existing events...")
         # Remove or update modules
         for event in events:
             uid = event.subcomponents[0].get("uid")
@@ -246,12 +247,16 @@ class LectioCalDavSynchronizer:
                 removed += 1
                 self.cal.delete_event(uid)
 
+        self.log.info("Adding new modules to calendar...")
         # Add remaining modules (new modules)
         for module in sched:
             added += 1
             self.add_or_update_module(module)
 
-        self.log.info(f"Updated {updated} events\nAdded {added} events\nRemoved {removed} events")
+        self.log.info("---------- OVERVIEW ----------")
+        self.log.info(f"Updated {updated} events")
+        self.log.info(f"Added {added} events")
+        self.log.info(f"Removed {removed} events")
 
 if __name__ == '__main__':
     from os import environ
