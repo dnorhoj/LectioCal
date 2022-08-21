@@ -21,6 +21,9 @@ class LectioCalDavSynchronizer:
             cal_password (str): CalDav password
         """
 
+        self.log = logging.getLogger("synchronizer")
+        logging.basicConfig(level=logging.INFO, format='%(message)s')
+
         self.lec_inst_id = lec_inst_id
         self.lec_username = lec_username
         self.lec_password = lec_password
@@ -37,9 +40,6 @@ class LectioCalDavSynchronizer:
         )
 
         self.team_translations = self._get_team_translations()
-
-        self.log = logging.getLogger("synchronizer")
-        logging.basicConfig(level=logging.INFO, format='%(message)s')
 
     def _lec_auth(self) -> lectio.Lectio:
         """Authenticate lectio module, and return it
