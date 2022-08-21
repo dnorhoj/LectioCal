@@ -255,12 +255,10 @@ class LectioCalDavSynchronizer:
             self.add_or_update_module(module)
 
         print(cooltables.create_table([
-            ["Overview", ""],
-
             ["Updated", str(updated)],
             ["Added", str(added)],
             ["Removed", str(removed)],
-        ], theme=cooltables.CLEAN_THEME))
+        ], theme=cooltables.NO_HORIZONTAL_THEME, header=False), flush=True)
 
 if __name__ == '__main__':
     from os import environ

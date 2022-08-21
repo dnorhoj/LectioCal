@@ -6,4 +6,4 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "src/schedule.py"]
+CMD ["python", "-u", "src/schedule.py"]
