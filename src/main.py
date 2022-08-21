@@ -64,7 +64,7 @@ class LectioCalDavSynchronizer:
             TEAM_TRANSLATIONS_PATH = os.path.join(os.path.dirname(__file__), '..', 'team_translations.json')
 
             with open(TEAM_TRANSLATIONS_PATH, 'r') as f:
-                return json.load(f)
+                return {k.lower(): v for k,v in json.load(f).items()} # Make dict keys lowercase
 
         except FileNotFoundError:
             self.log.warn("No team translation config found.")
@@ -99,9 +99,10 @@ class LectioCalDavSynchronizer:
         """
 
         title = module.subject
+        subject = module.subject.lower()
 
-        for trans in self.team_translations.keys():
-            if trans.lower() in module.subject.lower():
+        for trans in set(self.team_translations.keys()):
+            if trans in subject:
                 title = self.team_translations.get(trans)
 
         if module.title is not None:
