@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f5300afbaaa17b6cadfb214346c4c68724a67837aa98a9b458a35e9550e3aea9"
+            "sha256": "7bf5f8e9b7e2c197c9c2419b4943b09c394c16946c0561f1583eb3872d869878"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -42,11 +42,18 @@
         },
         "charset-normalizer": {
             "hashes": [
-                "sha256:5189b6f22b01957427f35b6a08d9a0bc45b46d3788ef5a92e978433c7a35f8a5",
-                "sha256:575e708016ff3a5e3681541cb9d79312c416835686d054a23accb873b254f413"
+                "sha256:5a3d016c7c547f69d6f81fb0db9449ce888b418b5b9952cc5e6e66843e9dd845",
+                "sha256:83e9a75d1911279afd89352c68b45348559d1fc0506b054b346651b5e7fee29f"
             ],
             "markers": "python_full_version >= '3.6.0'",
-            "version": "==2.1.0"
+            "version": "==2.1.1"
+        },
+        "cooltables": {
+            "hashes": [
+                "sha256:7c85396e108fa2ea936bb76b74fd7ebd4913ed06c92112e026859226a91443e5"
+            ],
+            "index": "pypi",
+            "version": "==0.0.3"
         },
         "icalendar": {
             "hashes": [
@@ -180,11 +187,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:10602cd0a6f5feab6656e9587f9075292ab777c5200f3bf00293ecd23d9f2788",
-                "sha256:d2e010624c781b26ad6629a8de9832327cf853dea93894487979e55f9ad06857"
+                "sha256:1c664b23706b753986b0f4b13e20bb82177ab29450d5b4d5d6d244c34a2235bd",
+                "sha256:201d7b596b0685f2dd3aaf231a637ffda51fc61323631d915e5c55b79d2d8115"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==65.1.0"
+            "version": "==65.1.1"
         },
         "six": {
             "hashes": [
@@ -201,14 +208,6 @@
             ],
             "markers": "python_full_version >= '3.6.0'",
             "version": "==2.3.2.post1"
-        },
-        "tqdm": {
-            "hashes": [
-                "sha256:40be55d30e200777a307a7585aee69e4eabb46b4ec6a4b4a5f2d9f11e7d5408d",
-                "sha256:74a2cdefe14d11442cedf3ba4e21a3b84ff9a2dbdc6cfae2c34addb2a14a5ea6"
-            ],
-            "index": "pypi",
-            "version": "==4.64.0"
         },
         "tzdata": {
             "hashes": [

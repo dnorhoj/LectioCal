@@ -7,6 +7,7 @@ import os.path
 import lectio
 import icalendar
 import caldav as caldav
+import cooltables
 
 class LectioCalDavSynchronizer:
     def __init__(self, lec_inst_id, lec_username, lec_password, cal_url, cal_username, cal_password) -> None:
@@ -253,10 +254,13 @@ class LectioCalDavSynchronizer:
             added += 1
             self.add_or_update_module(module)
 
-        self.log.info("---------- OVERVIEW ----------")
-        self.log.info(f"Updated {updated} events")
-        self.log.info(f"Added {added} events")
-        self.log.info(f"Removed {removed} events")
+        print(cooltables.create_table([
+            ["Overview", ""],
+
+            ["Updated", str(updated)],
+            ["Added", str(added)],
+            ["Removed", str(removed)],
+        ], theme=cooltables.CLEAN_THEME))
 
 if __name__ == '__main__':
     from os import environ

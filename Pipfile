@@ -6,11 +6,11 @@ name = "pypi"
 [packages]
 icalendar = "*"
 "lectio.py" = "*"
-tqdm = "*"
 beautifulsoup4 = "*"
 apscheduler = "*"
 requests = "*"
 lxml = "*"
+cooltables = "*"
 
 [dev-packages]
 
