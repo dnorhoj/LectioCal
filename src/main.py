@@ -199,13 +199,14 @@ class LectioCalDavSynchronizer:
             start = datetime.now()
 
         start = start.replace(hour=0, minute=0, second=0, microsecond=0)
-        end = start+timedelta(days=30)
+        end = start+timedelta(days=31)
 
         # Get schedule for student
         sched = self.lec.get_schedule_for_student(
             self.lec_user_id,
             start,
-            end
+            end,
+            False
         )
         self.log.debug(f"Got {len(sched)} modules from lectio")
 
