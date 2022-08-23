@@ -60,9 +60,9 @@ class LectioCalDavSynchronizer:
         return lec
 
     def _get_team_translations(self):
-        try:
-            TEAM_TRANSLATIONS_PATH = os.path.join(os.path.dirname(__file__), '..', 'team_translations.json')
+        TEAM_TRANSLATIONS_PATH = os.path.join(os.path.dirname(__file__), '..', 'team_translations.json')
 
+        try:
             with open(TEAM_TRANSLATIONS_PATH, 'r') as f:
                 return {k.lower(): v for k,v in json.load(f).items()} # Make dict keys lowercase
 
