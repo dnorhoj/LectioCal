@@ -60,18 +60,21 @@ class LectioCalDavSynchronizer:
         return lec
 
     def _get_team_translations(self):
-        TEAM_TRANSLATIONS_PATH = os.path.join(os.path.dirname(__file__), '..', 'team_translations.json')
-
         try:
+            TEAM_TRANSLATIONS_PATH = os.path.join(
+                os.path.dirname(__file__), '..', 'team_translations.json')
+
             with open(TEAM_TRANSLATIONS_PATH, 'r') as f:
-                return {k.lower(): v for k,v in json.load(f).items()} # Make dict keys lowercase
+                # Make dict keys lowercase
+                return {k.lower(): v for k, v in json.load(f).items()}
 
         except FileNotFoundError:
             self.log.warn("No team translation config found.")
         except json.JSONDecodeError:
             self.log.error(f"Invalid json in {TEAM_TRANSLATIONS_PATH}")
         except:
-            self.log.error("Unknown error occured while trying to read team translations")
+            self.log.error(
+                "Unknown error occured while trying to read team translations")
 
         return {}
 
@@ -113,6 +116,10 @@ class LectioCalDavSynchronizer:
         return title
 
     @staticmethod
+    def _get_module_location(module: lectio.Module) -> str:
+        return module.room
+
+    @staticmethod
     def _get_module_desc(module: lectio.Module) -> str:
         """Get module description
 
@@ -123,16 +130,14 @@ class LectioCalDavSynchronizer:
             str: Module description, with url
         """
 
-        desc = re.match(r"(.*?)&", module.url)[1]
-        if module.room:
-            desc = module.room+"\n"+desc
+        desc = re.match(r"^(.*?)&", module.url)[1]
         if module.extra_info:
             desc += "\n\n" + module.extra_info
 
         return desc.replace("\r\n", "\n")
 
     @staticmethod
-    def _get_module_color(module: lectio.Module) -> str:
+    def _get_module_color(module: lectio.Module) -> str | None:
         """Get module color as string
 
         Args:
@@ -143,9 +148,9 @@ class LectioCalDavSynchronizer:
         """
 
         color = None
-        if module.status == 1: # Module changed
+        if module.status == 1:  # Module changed
             color = "green"
-        elif module.status == 2: # Module deleted
+        elif module.status == 2:  # Module deleted
             color = "red"
 
         return color
@@ -160,12 +165,12 @@ class LectioCalDavSynchronizer:
         self.cal.add_event(
             uid=self._get_module_id(module),
             summary=self._get_module_title(module),
+            location=self._get_module_location(module),
             desc=self._get_module_desc(module),
             color=self._get_module_color(module),
             start=module.start_time,
             end=module.end_time,
         )
-
 
     def event_module_equal(self, event: icalendar.Calendar, module: lectio.Module) -> bool:
         """Compare if module and calendar is equal
@@ -189,7 +194,7 @@ class LectioCalDavSynchronizer:
         except AttributeError:
             return False
 
-    def sync(self, start:datetime=None):
+    def sync(self, start: datetime = None):
         """Starts synchronization 30 days forward
 
         Args:
@@ -224,12 +229,14 @@ class LectioCalDavSynchronizer:
         updated = 0
 
         self.log.info("Updating/removing existing events...")
+
         # Remove or update modules
         for event in events:
             uid = event.subcomponents[0].get("uid")
 
             try:
-                i = sched_lookup.index(uid) # Will raise exception if not found
+                # Will raise exception if not found
+                i = sched_lookup.index(uid)
 
                 # Module exists
                 module = sched[i]
@@ -260,6 +267,7 @@ class LectioCalDavSynchronizer:
             ["Added", str(added)],
             ["Removed", str(removed)],
         ], theme=cooltables.NO_HORIZONTAL_THEME, header=False), flush=True)
+
 
 if __name__ == '__main__':
     from os import environ

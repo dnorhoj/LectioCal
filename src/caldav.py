@@ -8,6 +8,7 @@ import requests
 SEARCH_STRING = '''<?xml version='1.0' encoding='utf-8'?>
 <C:calendar-query xmlns:D="DAV:" xmlns:C="urn:ietf:params:xml:ns:caldav"><D:prop><C:calendar-data><C:expand start="{0}" end="{1}"/></C:calendar-data></D:prop><C:filter><C:comp-filter name="VCALENDAR"><C:comp-filter name="VEVENT"><C:time-range start="{0}" end="{1}"/></C:comp-filter></C:comp-filter></C:filter></C:calendar-query>'''
 
+
 class CalDavClient():
     def __init__(self, username: str, password: str, cal_url: str) -> None:
         self.cal_url = cal_url
@@ -20,12 +21,14 @@ class CalDavClient():
 
         if (not r.ok):
             print(r.status_code)
-            raise Exception(f"Problem encountered on url: \"{url}\", method: \"{method}\"")
+            print(r.text)
+            raise Exception(
+                f"Problem encountered on url: \"{url}\", method: \"{method}\"")
 
         return r
 
     @staticmethod
-    def _generate_ical(start: datetime, end: datetime, summary: str, desc: str, uid: str, color:str=None) -> str:
+    def _generate_ical(start: datetime, end: datetime, summary: str, location: str, desc: str, uid: str, color: str = None) -> str:
         # Create calendar instance
         event = icalendar.Calendar()
         event.add('prodid', '-//dnorhoj//lectio.py//da_DK')
@@ -39,6 +42,7 @@ class CalDavClient():
         event_data.add('dtstart', start)
         event_data.add('dtend', end)
         event_data.add('summary', summary)
+        event_data.add('location', location)
         event_data.add('description', desc)
         if color is not None:
             event_data.add('color', color)
@@ -47,10 +51,15 @@ class CalDavClient():
 
         return event.to_ical()
 
-    def add_event(self, start, end, summary, desc, uid, color=None):
-        self._request("PUT", f"{self.cal_url}/{uid}.ics", data=self._generate_ical(start,end,summary,desc,uid,color))
+    def add_event(self, start, end, summary, location, desc, uid, color=None):
+        self._request(
+            "PUT",
+            f"{self.cal_url}/{uid}.ics",
+            data=self._generate_ical(
+                start, end, summary, location, desc, uid, color)
+        )
 
-    def delete_event(self, uid:str) -> None:
+    def delete_event(self, uid: str) -> None:
         self._request("DELETE", f"{self.cal_url}/{uid}.ics")
 
     def get_events(self, start: datetime, end: datetime) -> List[icalendar.Calendar]:
