@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install -r requirements.txt
+RUN pip install pipenv && \
+    pipenv install --deploy --system && \
+    pip uninstall pipenv -y
 
-CMD ["python", "-u", "src/schedule.py"]
+CMD ["python", "src/schedule.py"]
