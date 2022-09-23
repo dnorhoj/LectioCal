@@ -1,6 +1,6 @@
 import json
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import logging
 import os.path
 
@@ -94,7 +94,7 @@ class LectioCalDavSynchronizer:
         if module.url:
             mod_id = re.search(r"absid=(.*?)&", module.url)[1]
         else:
-            mod_id = str(round(module.start_time.timestamp()))
+            mod_id = str(round(module.start_time.replace(tzinfo=timezone.utc).timestamp()))
 
         return "lecmod"+mod_id
 
