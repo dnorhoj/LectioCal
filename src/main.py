@@ -9,6 +9,7 @@ import icalendar
 import caldav as caldav
 import cooltables
 
+
 class LectioCalDavSynchronizer:
     def __init__(self, lec_inst_id, lec_username, lec_password, cal_url, cal_username, cal_password) -> None:
         """Constructor for LectioCalDavSynchronizer
@@ -89,7 +90,13 @@ class LectioCalDavSynchronizer:
             str: id from module url with lecmod prepended
         """
 
-        return "lecmod"+re.search(r"absid=(.*?)&", module.url)[1]
+        mod_id = ""
+        if module.url:
+            mod_id = re.search(r"absid=(.*?)&", module.url)[1]
+        else:
+            mod_id = str(round(module.start_time.timestamp()))
+
+        return "lecmod"+mod_id
 
     def _get_module_title(self, module: lectio.Module) -> str:
         """Get module title
@@ -101,15 +108,20 @@ class LectioCalDavSynchronizer:
             str: module title
         """
 
-        title = module.subject
-        subject = module.subject.lower()
+        title = ""
+        if module.subject:
+            title = module.subject
+            subject = module.subject.lower()
 
-        for trans in set(self.team_translations.keys()):
-            if trans in subject:
-                title = self.team_translations.get(trans)
+            for trans in self.team_translations.keys():
+                if trans in subject:
+                    title = self.team_translations.get(trans)
 
-        if module.title is not None:
-            title += f' - {module.title}'
+            if module.title:
+                title += ' - '
+
+        if module.title:
+            title += module.title
         if module.extra_info:
             title += ' [+]'
 
@@ -130,9 +142,18 @@ class LectioCalDavSynchronizer:
             str: Module description, with url
         """
 
-        desc = re.match(r"^(.*?)&", module.url)[1]
+        desc = ""
+
+        # Add url at start if it exists
+        if module.url:
+            desc = re.match(r"^(.*?)&", module.url)[1]
+
+            if module.extra_info:
+                desc += "\n\n" + module.extra_info
+
+        # Add extra info if it exists
         if module.extra_info:
-            desc += "\n\n" + module.extra_info
+            desc += module.extra_info
 
         return desc.replace("\r\n", "\n")
 
