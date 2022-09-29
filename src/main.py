@@ -149,7 +149,7 @@ class LectioCalDavSynchronizer:
             desc = re.match(r"^(.*?)&", module.url)[1]
 
             if module.extra_info:
-                desc += "\n\n" + module.extra_info
+                desc += "\n\n"
 
         # Add extra info if it exists
         if module.extra_info:
