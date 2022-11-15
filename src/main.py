@@ -241,10 +241,10 @@ class LectioCalDavSynchronizer:
             False
         )
 
-        # Set astimezone to TIMEZONE for all modules
+        # Set timezone to Europe/Copenhagen
         for module in sched:
-            module.start_time = module.start_time.astimezone(TIMEZONE)
-            module.end_time = module.end_time.astimezone(TIMEZONE)
+            module.start_time = TIMEZONE.localize(module.start_time)
+            module.end_time = TIMEZONE.localize(module.end_time)
 
         self.log.debug(f"Got {len(sched)} modules from lectio")
 
