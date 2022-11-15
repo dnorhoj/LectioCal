@@ -9,6 +9,9 @@ import icalendar
 import caldav as caldav
 import cooltables
 
+# Dirty patch until timezone is implemented into lectio.py
+from pytz import timezone
+TIMEZONE = timezone('Europe/Copenhagen')
 
 class LectioCalDavSynchronizer:
     def __init__(self, lec_inst_id, lec_username, lec_password, cal_url, cal_username, cal_password) -> None:
@@ -209,8 +212,9 @@ class LectioCalDavSynchronizer:
             return (component.get("uid") == self._get_module_id(module) and
                     component.get("summary") == self._get_module_title(module) and
                     component.get("description") == self._get_module_desc(module) and
-                    component.get("dtstart").dt.replace(tzinfo=None) == module.start_time and
-                    component.get("dtend").dt.replace(tzinfo=None) == module.end_time and
+                    component.get("dtstart").dt == module.start_time and
+                    component.get("dtend").dt == module.end_time and
+                    component.get("location") == self._get_module_location(module) and
                     component.get("color") == self._get_module_color(module))
         except AttributeError:
             return False
@@ -236,6 +240,12 @@ class LectioCalDavSynchronizer:
             end,
             False
         )
+
+        # Set astimezone to TIMEZONE for all modules
+        for module in sched:
+            module.start_time = module.start_time.astimezone(TIMEZONE)
+            module.end_time = module.end_time.astimezone(TIMEZONE)
+
         self.log.debug(f"Got {len(sched)} modules from lectio")
 
         sched_lookup = [self._get_module_id(module) for module in sched]

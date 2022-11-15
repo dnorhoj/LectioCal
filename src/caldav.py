@@ -42,7 +42,8 @@ class CalDavClient():
         event_data.add('dtstart', start)
         event_data.add('dtend', end)
         event_data.add('summary', summary)
-        event_data.add('location', location)
+        if location:
+            event_data.add('location', location)
         event_data.add('description', desc)
         if color is not None:
             event_data.add('color', color)
