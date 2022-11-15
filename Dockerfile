@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY . .
 
+RUN apk add tzdata
+
 RUN pip install pipenv && \
     pipenv install --deploy --system && \
     pip uninstall pipenv -y
