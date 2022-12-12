@@ -30,9 +30,19 @@ pip install -r requirements.txt
 
 ## Running
 
-You can run the script either a single time, with `python main.py`, or you can run the script every hour with `python schedule.py`
+The recommended way to run the script is with the docker image, which will run the script every hour. Please refer to the [docker hub repository](https://hub.docker.com/r/dnorhoj/lectiocal) for more information on how to customize it more. But to simply run the script you can execute the following `docker run` command:
 
-Moreover, you can build and run the repository as a docker image, or use heroku, or similar services.
+```bash
+docker run -d \
+  --name lectiocal \
+  --restart always \
+  --env-file .env \
+  dnorhoj/lectiocal:latest
+```
+
+You can also run this script with python, where you can run the script either a single time, with `python main.py`, or run the script every hour with `python schedule.py`
+
+Moreover, you can build and run the repository as a docker image, use heroku, or run it with similar services.
 
 ## Environment variables
 
