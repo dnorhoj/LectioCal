@@ -13,6 +13,7 @@ import cooltables
 from pytz import timezone
 TIMEZONE = timezone('Europe/Copenhagen')
 
+
 class LectioCalDavSynchronizer:
     def __init__(self, lec_inst_id, lec_username, lec_password, cal_url, cal_username, cal_password) -> None:
         """Constructor for LectioCalDavSynchronizer
@@ -93,13 +94,12 @@ class LectioCalDavSynchronizer:
             str: id from module url with lecmod prepended
         """
 
-        mod_id = ""
         if module.url:
-            mod_id = re.search(r"absid=(.*?)&", module.url)[1]
-        else:
-            mod_id = str(round(module.start_time.timestamp()))
+            search = re.search(r"absid=(.*?)&", module.url)
+            if search:
+                return "lecmod"+search[1]
 
-        return "lecmod"+mod_id
+        return "lecmod"+str(round(module.start_time.timestamp()))
 
     def _get_module_title(self, module: lectio.Module) -> str:
         """Get module title
