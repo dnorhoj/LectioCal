@@ -3,6 +3,7 @@ import re
 from datetime import datetime, timedelta
 import logging
 import os.path
+from hashlib import sha256
 
 import lectio
 import icalendar
@@ -99,7 +100,13 @@ class LectioCalDavSynchronizer:
             if search:
                 return "lecmod"+search[1]
 
-        return "lecmod"+str(round(module.start_time.timestamp()))
+        # If no url, create our own id (bit scuffed)
+        subject = module.subject if module.subject else ""
+        data = str(module.start_time.timestamp()) + \
+            str(module.end_time.timestamp())+subject
+        shorthash = sha256(data.encode('utf-8')).hexdigest()[:10]
+
+        return "lecmod"+shorthash
 
     def _get_module_title(self, module: lectio.Module) -> str:
         """Get module title
