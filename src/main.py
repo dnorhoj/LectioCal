@@ -156,7 +156,13 @@ class LectioCalDavSynchronizer:
 
         # Add url at start if it exists
         if module.url:
-            desc = re.match(r"^(.*?)&", module.url)[1]
+            match = re.match(r"^(.*?)&prevurl", module.url)
+
+            if not match is None:
+                desc = match[1]
+            else:
+                desc = module.url
+
 
             if module.extra_info:
                 desc += "\n\n"
